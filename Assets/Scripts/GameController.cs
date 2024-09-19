@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    //initialize list for cubes
+    //initialize list for cubes *NOT WORKING* :(
     protected List<GameObject> cubesList;
     //initialize cube prefab reference
     public GameObject cubePrefab;
@@ -21,7 +21,8 @@ public class GameController : MonoBehaviour
             Vector3 randPosInView = new Vector3(Random.Range(-10, 10), 0, Random.Range(-7, 7));
             //instantiate cube at random position
             Instantiate(cubePrefab, randPosInView, Quaternion.identity);
-            //add that cube to list
+
+            //add that cube to list *NOT WORKING* :(
             // cubesList.Add(cubePrefab);
         }
     }
@@ -43,8 +44,10 @@ public class GameController : MonoBehaviour
             {
                 // the object we hit
                 GameObject objToRemove = rch.collider.gameObject;
-                //delete object clicked from list
+
+                //delete object clicked from list *NOT WORKING* :(
                 // cubesList.Remove(objToRemove);
+
                 //delete object clicked from game
                 Destroy(objToRemove);
 
@@ -52,7 +55,8 @@ public class GameController : MonoBehaviour
                 Vector3 randPosInView = new Vector3(Random.Range(-10, 10), 0, Random.Range(-7, 7));
                 //create new cube in view
                 Instantiate(cubePrefab, randPosInView, Quaternion.identity);
-                //add new cube to list
+
+                //add new cube to list *NOT WORKING* :(
                 // cubesList.Add(cubePrefab);
             }
         }
