@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             //get random position on screen
-            Vector3 randPosInView = new Vector3(Random.Range(-7, 6), 5, Random.Range(-4, 7));
+            Vector3 randPosInView = new Vector3(Random.Range(-7, 6), 10, Random.Range(-4, 7));
             //instantiate cube at random position
             Instantiate(cubePrefab, randPosInView, Quaternion.identity);
 
@@ -54,11 +54,8 @@ public class GameController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("cube hit trigger");
-
         if (other.tag == "Cube")
         {
-            Debug.Log("cube hit the ground");
             ResetCube(other.gameObject);
         }
     }
@@ -72,7 +69,7 @@ public class GameController : MonoBehaviour
         Destroy(cube);
 
         //add new cube to game
-        Vector3 randPosInView = new Vector3(Random.Range(-10, 10), 5, Random.Range(-7, 7));
+        Vector3 randPosInView = new Vector3(Random.Range(-10, 10), 10, Random.Range(-7, 7));
         Instantiate(cubePrefab, randPosInView, Quaternion.identity);
 
         //add new cube to list
