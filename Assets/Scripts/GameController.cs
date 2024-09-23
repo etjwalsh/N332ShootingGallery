@@ -54,12 +54,16 @@ public class GameController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        //check for cube tag on object that entered trigger
         if (other.tag == "Cube")
         {
+            //reset cube function call
             ResetCube(other.gameObject);
         }
     }
 
+    //reset cube function to delete cube from list and world,
+    //and then add a new cube to the world and then add to the list
     private void ResetCube(GameObject cube)
     {
         //delete cube from list
