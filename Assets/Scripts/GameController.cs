@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    //initialize number of cubes to spawn
+    int numCubes = 5;
     //making 
     [SerializeField]
     private LayerMask cubeMask;
@@ -18,7 +20,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         //for loop to spawn cubes
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < numCubes; i++)
         {
             //get random position on screen
             Vector3 randPosInView = new Vector3(Random.Range(-7, 6), 10, Random.Range(-4, 7));
