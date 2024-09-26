@@ -5,8 +5,10 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     //initialize number of cubes to spawn
-    int numCubes = 5;
-    //making 
+    [SerializeField]
+    private int numCubes = 10;
+
+    //initialize cube layer mask
     [SerializeField]
     private LayerMask cubeMask;
 
