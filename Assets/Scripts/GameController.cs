@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
 
     //reset cube function to delete cube from list and world,
     //and then add a new cube to the world and then add to the list
-    private void ResetCube(GameObject cube)
+    public void ResetCube(GameObject cube)
     {
         //delete cube from list
         cubesList.Remove(cube);
