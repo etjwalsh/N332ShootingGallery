@@ -8,6 +8,11 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int numCubes = 10;
 
+    //initialize numbers for scoring
+    private int numHit = 0;
+    private int numMissed = 0;
+
+
     //initialize cube layer mask
     [SerializeField]
     private LayerMask cubeMask;
@@ -51,7 +56,7 @@ public class GameController : MonoBehaviour
             {
                 // the object we hit
                 GameObject objToRemove = rch.collider.gameObject;
-
+                numHit++;
                 ResetCube(objToRemove);
             }
         }
@@ -61,6 +66,7 @@ public class GameController : MonoBehaviour
         //check for cube tag on object that entered trigger
         if (other.tag == "Cube")
         {
+            numMissed++;
             //reset cube function call
             ResetCube(other.gameObject);
         }
