@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -9,8 +11,8 @@ public class GameController : MonoBehaviour
     private int numCubes = 10;
 
     //initialize numbers for scoring
-    private int numHit = 0;
-    private int numMissed = 0;
+    public int numHit = 0;
+    public int numMissed = 0;
 
 
     //initialize cube layer mask
@@ -57,6 +59,7 @@ public class GameController : MonoBehaviour
                 // the object we hit
                 GameObject objToRemove = rch.collider.gameObject;
                 numHit++;
+                Debug.Log("hit" + numHit);
                 ResetCube(objToRemove);
             }
         }
@@ -67,6 +70,7 @@ public class GameController : MonoBehaviour
         if (other.tag == "Cube")
         {
             numMissed++;
+            Debug.Log("missed" + numMissed);
             //reset cube function call
             ResetCube(other.gameObject);
         }
