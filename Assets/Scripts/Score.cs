@@ -8,16 +8,17 @@ public class Score : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Hits;
     [SerializeField] private TextMeshProUGUI Misses;
-    [SerializeField] private GameObject resetTrigger;
+    [SerializeField] private GameController resetTrigger;
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        Hits.text = resetTrigger.numHit.ToString();
+        Misses.text = resetTrigger.numMissed.ToString();
     }
 }
