@@ -11,6 +11,11 @@ public class Score : MonoBehaviour
     [SerializeField] private GameController resetTrigger;
     [SerializeField] private GameObject crosshairs;
 
+    private void Start()
+    {
+        Cursor.visible = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
