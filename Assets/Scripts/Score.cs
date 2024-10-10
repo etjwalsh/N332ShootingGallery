@@ -27,6 +27,7 @@ public class Score : MonoBehaviour
     public void ExitClicked()
     {
         Debug.Log("Exit clicked");
+        resetTrigger.currentState = GameController.States.GameOver;
         UnityEditor.EditorApplication.isPlaying = false;
 
         //for actual build of game 

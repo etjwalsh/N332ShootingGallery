@@ -25,20 +25,14 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject cubePrefab;
 
+    //initialize states
+    public enum States { Menu, Play, Pause, GameOver }
+    public States currentState = States.Menu;
+
     // Start is called before the first frame update
     private void Start()
     {
-        //for loop to spawn cubes
-        for (int i = 0; i < numCubes; i++)
-        {
-            //get random position on screen
-            Vector3 randPosInView = new Vector3(Random.Range(-7, 6), 10, Random.Range(-4, 7));
-            //instantiate cube at random position
-            Instantiate(cubePrefab, randPosInView, Quaternion.identity);
 
-            //add that cube to list
-            cubesList.Add(cubePrefab);
-        }
     }
 
     // Update is called once per frame
@@ -63,6 +57,28 @@ public class GameController : MonoBehaviour
                 ResetCube(objToRemove);
             }
         }
+
+        // switch (currentState)
+        // {
+        //     case Menu:
+        //         {
+        //             MenuState();
+        //         }
+        //     case Pause:
+        //         {
+        //             PauseState();
+        //         }
+        //     case Play:
+        //         {
+        //             PlayState();
+        //         }
+
+        //     case GameOver:
+        //         {
+        //             GameOverState();
+        //         }
+
+        // }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -92,5 +108,32 @@ public class GameController : MonoBehaviour
 
         //add new cube to list
         cubesList.Add(cubePrefab);
+    }
+
+    void PlayState()
+    {
+        //for loop to spawn cubes
+        for (int i = 0; i < numCubes; i++)
+        {
+            //get random position on screen
+            Vector3 randPosInView = new Vector3(Random.Range(-7, 6), 10, Random.Range(-4, 7));
+            //instantiate cube at random position
+            Instantiate(cubePrefab, randPosInView, Quaternion.identity);
+
+            //add that cube to list
+            cubesList.Add(cubePrefab);
+        }
+    }
+    void MenuState()
+    {
+
+    }
+    void PauseState()
+    {
+
+    }
+    void GameOverState()
+    {
+
     }
 }
