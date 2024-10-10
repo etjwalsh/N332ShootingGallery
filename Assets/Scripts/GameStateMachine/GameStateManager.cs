@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour
 {
     GameBaseState currentState;
+    [SerializeField] public GameObject ResetTrigger;
     public GameMenuState menuState = new GameMenuState();
     public GamePausedState pausedState = new GamePausedState();
     public GameOverState overState = new GameOverState();

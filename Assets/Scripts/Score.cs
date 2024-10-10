@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Score : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Hits;
     [SerializeField] private TextMeshProUGUI Misses;
-    [SerializeField] private GameController resetTrigger;
+    private GameController resetTrigger;
     [SerializeField] private GameObject crosshairs;
 
     private void Start()
@@ -31,5 +32,16 @@ public class Score : MonoBehaviour
 
         //for actual build of game 
         //Application.Quit();
+    }
+
+    public void StartClicked()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void PauseClicked()
+    {
+
+
     }
 }
