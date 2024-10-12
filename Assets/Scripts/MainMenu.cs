@@ -5,11 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void onStartClicked()
+    [SerializeField] private GameObject crosshairs;
+    [SerializeField] private GameController resetTrigger;
+
+    private void Update()
     {
-        SceneManager.LoadScene("SampleScene");
+        crosshairs.transform.position = Input.mousePosition;
     }
-    public void onExitClicked()
+    public void OnStartClicked()
+    {
+        resetTrigger.currentState = GameController.GameState.Play;
+    }
+    public void OnExitClicked()
     {
         UnityEditor.EditorApplication.isPlaying = false;
     }

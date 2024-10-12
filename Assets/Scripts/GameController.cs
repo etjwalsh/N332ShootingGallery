@@ -26,60 +26,84 @@ public class GameController : MonoBehaviour
     private GameObject cubePrefab;
 
     //initialize states
-    public enum States { Menu, Play, Pause, GameOver }
-    public States currentState = States.Menu;
+    public enum GameState { MenuUpdate, MenuEnter, PlayUpdate, PlayEnter, PauseUpdate, PauseEnter, GameOverUpdate, GameOverEnter }
+    //set state when you start the game state
+    public GameState currentState = GameState.Menu;
+
+    //initialize UI references
+    [SerializeField] private GameObject menuUI;
+    [SerializeField] private GameObject gameUI;
+    
 
     // Start is called before the first frame update
     private void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     private void Update()
     {
-        //check for mouse click
-        if (Input.GetButtonDown("Fire1"))
+        //state machine
+        switch (currentState)
         {
-            //gets the position of the mouse
-            Vector2 mousePos = Input.mousePosition;
-            Ray ray = Camera.main.ScreenPointToRay(mousePos);
-            RaycastHit rch;
+            //initial menu enter state
+            case GameState.MenuEnter:
+                {
+                    MenuStateEnter();
+                    break;
+                }
 
-            //raycast at mouse click location
-            //"out" will mark it as output rather than input
-            if (Physics.Raycast(ray, out rch, 1000f, cubeMask))
-            {
-                // the object we hit
-                GameObject objToRemove = rch.collider.gameObject;
-                numHit++;
-                Debug.Log("hit" + numHit);
-                ResetCube(objToRemove);
-            }
+            //state while menu is active
+            case GameState.MenuUpdate:
+                {
+                    MenuStateUpdate();
+                    break;
+                }
+
+            //initial pause state
+            case GameState.PauseEnter:
+                {
+                    PauseStateEnter();
+                    break;
+                }
+            
+            //state while pause menu is active
+            case GameState.PauseUpdate:
+                {
+                    PauseStateUpdate();
+                    break;
+                }
+
+            //initial play state
+            case GameState.PlayEnter:
+                {
+                    PlayStateEnter();
+                    break;   
+                }
+
+            //state while game is being played
+            case GameState.PlayUpdate:
+                {
+                    PlayStateUpdate();
+                    break;
+                }
+
+            //initial game over state
+            case GameState.GameOverEnter:
+                {
+                    GameOverStateEnter();
+                    break;   
+                }
+
+            case GameState.GameOverUpdate:
+                {
+                    GameOverStateUpdate();
+                    break;
+                }
         }
-
-        // switch (currentState)
-        // {
-        //     case Menu:
-        //         {
-        //             MenuState();
-        //         }
-        //     case Pause:
-        //         {
-        //             PauseState();
-        //         }
-        //     case Play:
-        //         {
-        //             PlayState();
-        //         }
-
-        //     case GameOver:
-        //         {
-        //             GameOverState();
-        //         }
-
-        // }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         //check for cube tag on object that entered trigger
@@ -110,8 +134,35 @@ public class GameController : MonoBehaviour
         cubesList.Add(cubePrefab);
     }
 
-    void PlayState()
+    protected void PlayStateUpdate()
     {
+        //check for mouse click
+        if (Input.GetButtonDown("Fire1"))
+        {
+            //gets the position of the mouse
+            Vector2 mousePos = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            RaycastHit rch;
+
+            //raycast at mouse click location
+            //"out" will mark it as output rather than input
+            if (Physics.Raycast(ray, out rch, 1000f, cubeMask))
+            {
+                // the object we hit
+                GameObject objToRemove = rch.collider.gameObject;
+                numHit++;
+                Debug.Log("hit" + numHit);
+                ResetCube(objToRemove);
+            }
+        }
+    }
+
+    protected void PlayStateEnter()
+    {
+        //set the correct UI to show
+        gameUI.SetActive(true);
+        menuUI.SetActive(false);
+
         //for loop to spawn cubes
         for (int i = 0; i < numCubes; i++)
         {
@@ -124,15 +175,33 @@ public class GameController : MonoBehaviour
             cubesList.Add(cubePrefab);
         }
     }
-    void MenuState()
+
+    protected void MenuStateUpdate()
+    {
+        MenuStateEnter();
+    }
+
+    protected void MenuStateEnter()
+    {
+        menuUI.SetActive(true);
+        gameUI.SetActive(false);
+    }
+
+    protected void PauseStateUpdate()
     {
 
     }
-    void PauseState()
+
+    protected void PauseStateEnter()
     {
 
     }
-    void GameOverState()
+
+    protected void GameOverStateUpdate()
+    {
+    }
+
+    protected void GameOverStateEnter()
     {
 
     }
