@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
     }
     public void OnStartClicked()
     {
-        resetTrigger.currentState = GameController.GameState.Play;
+        resetTrigger.currentState = GameController.GameState.PlayEnter;
     }
     public void OnExitClicked()
     {

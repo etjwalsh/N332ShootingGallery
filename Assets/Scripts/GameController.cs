@@ -7,33 +7,32 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     //initialize number of cubes to spawn
-    [SerializeField]
-    private int numCubes = 10;
+    [SerializeField] private int numCubes = 10;
 
     //initialize numbers for scoring
     public int numHit = 0;
     public int numMissed = 0;
+    [SerializeField] private int losingCondition;
 
 
     //initialize cube layer mask
-    [SerializeField]
-    private LayerMask cubeMask;
+    [SerializeField] private LayerMask cubeMask;
 
     //initialize list for cubes
     protected List<GameObject> cubesList = new List<GameObject>();
     //initialize cube prefab reference
-    [SerializeField]
-    private GameObject cubePrefab;
+    [SerializeField] private GameObject cubePrefab;
 
     //initialize states
-    public enum GameState { MenuUpdate, MenuEnter, PlayUpdate, PlayEnter, PauseUpdate, PauseEnter, GameOverUpdate, GameOverEnter }
+    public enum GameState { MenuEnter, PlayUpdate, PlayEnter, PauseEnter, GameOverEnter }
     //set state when you start the game state
-    public GameState currentState = GameState.Menu;
+    public GameState currentState = GameState.MenuEnter;
 
     //initialize UI references
     [SerializeField] private GameObject menuUI;
     [SerializeField] private GameObject gameUI;
-    
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject gameOverUI;
 
     // Start is called before the first frame update
     private void Start()
@@ -53,53 +52,29 @@ public class GameController : MonoBehaviour
                     MenuStateEnter();
                     break;
                 }
-
-            //state while menu is active
-            case GameState.MenuUpdate:
-                {
-                    MenuStateUpdate();
-                    break;
-                }
-
             //initial pause state
             case GameState.PauseEnter:
                 {
                     PauseStateEnter();
                     break;
                 }
-            
-            //state while pause menu is active
-            case GameState.PauseUpdate:
-                {
-                    PauseStateUpdate();
-                    break;
-                }
-
             //initial play state
             case GameState.PlayEnter:
                 {
                     PlayStateEnter();
                     break;   
                 }
-
             //state while game is being played
             case GameState.PlayUpdate:
                 {
                     PlayStateUpdate();
                     break;
                 }
-
             //initial game over state
             case GameState.GameOverEnter:
                 {
                     GameOverStateEnter();
                     break;   
-                }
-
-            case GameState.GameOverUpdate:
-                {
-                    GameOverStateUpdate();
-                    break;
                 }
         }
     }
@@ -107,10 +82,16 @@ public class GameController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //check for cube tag on object that entered trigger
-        if (other.tag == "Cube")
+        if (other.tag == "Cube" && currentState == GameState.PlayUpdate)
         {
             numMissed++;
-            Debug.Log("missed" + numMissed);
+             //if too many cubes missed, end the game
+            if (numMissed >= losingCondition)
+            {
+                Debug.Log("Losing condition met");
+                //change to game over state
+                currentState = GameState.GameOverEnter;
+            }
             //reset cube function call
             ResetCube(other.gameObject);
         }
@@ -151,10 +132,10 @@ public class GameController : MonoBehaviour
                 // the object we hit
                 GameObject objToRemove = rch.collider.gameObject;
                 numHit++;
-                Debug.Log("hit" + numHit);
                 ResetCube(objToRemove);
             }
         }
+
     }
 
     protected void PlayStateEnter()
@@ -163,46 +144,50 @@ public class GameController : MonoBehaviour
         gameUI.SetActive(true);
         menuUI.SetActive(false);
 
-        //for loop to spawn cubes
+        //for loop to spawn cubes for the first time
         for (int i = 0; i < numCubes; i++)
         {
             //get random position on screen
-            Vector3 randPosInView = new Vector3(Random.Range(-7, 6), 10, Random.Range(-4, 7));
+            Vector3 randPosInView = new Vector3(Random.Range(-7, 6), Random.Range(10,25), Random.Range(-4, 7));
             //instantiate cube at random position
             Instantiate(cubePrefab, randPosInView, Quaternion.identity);
 
             //add that cube to list
             cubesList.Add(cubePrefab);
         }
+        //change to play state update
+        currentState = GameState.PlayUpdate;
     }
-
-    protected void MenuStateUpdate()
-    {
-        MenuStateEnter();
-    }
-
+    //method for initializing the menu
     protected void MenuStateEnter()
     {
         menuUI.SetActive(true);
         gameUI.SetActive(false);
+        pauseUI.SetActive(false);
+        gameOverUI.SetActive(false);
     }
-
-    protected void PauseStateUpdate()
-    {
-
-    }
-
+    
+    //method to initialize the game pause menu
     protected void PauseStateEnter()
     {
+        //set correct UI
+        gameUI.SetActive(false);
+        pauseUI.SetActive(true);
 
+        //freeze all cubes
+        for (int i = 0; i < numCubes; i++)
+        {
+            //get cube at list position i
+            GameObject cubeToDisable = 
+            //disable its rigidbody
+            cubeToDisable.GetComponent<Rigidbody>().enabled = false;
+        }
+        
     }
-
-    protected void GameOverStateUpdate()
-    {
-    }
-
+    //method to initialize the game over state
     protected void GameOverStateEnter()
     {
-
+        gameUI.SetActive(false);
+        gameOverUI.SetActive(true);
     }
 }

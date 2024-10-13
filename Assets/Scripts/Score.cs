@@ -24,12 +24,8 @@ public class Score : MonoBehaviour
         crosshairs.transform.position = Input.mousePosition;
     }
 
-    public void ExitClicked()
+    public void PauseClicked()
     {
-        Debug.Log("Exit clicked");
-        UnityEditor.EditorApplication.isPlaying = false;
-
-        //for actual build of game 
-        // Application.Quit();
+        resetTrigger.currentState = GameController.GameState.PauseEnter;
     }
 }
