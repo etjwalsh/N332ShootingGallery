@@ -813,6 +813,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1612481620}
     - target: {fileID: 5906119114717351330, guid: 104a5c1176d5d224b81ac34c1ce6c911, type: 3}
+      propertyPath: pauseUI
+      value: 
+      objectReference: {fileID: 649933727}
+    - target: {fileID: 5906119114717351330, guid: 104a5c1176d5d224b81ac34c1ce6c911, type: 3}
       propertyPath: resetTrigger
       value: 
       objectReference: {fileID: 8126288569538558169}
@@ -851,7 +855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8748032192630499356, guid: 99d3509b06ef3564fbc0905c128a1ce3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -30
+      value: -16.8
       objectReference: {fileID: 0}
     - target: {fileID: 8748032192630499356, guid: 99d3509b06ef3564fbc0905c128a1ce3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -912,6 +916,7 @@ MonoBehaviour:
   cubeMask:
     serializedVersion: 2
     m_Bits: 64
+  cubesList: []
   cubePrefab: {fileID: 8956607020623433809, guid: acc7c18b9b01a074d9565edf2214fcee, type: 3}
   currentState: 0
   menuUI: {fileID: 1612481620}

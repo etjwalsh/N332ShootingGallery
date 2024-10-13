@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private LayerMask cubeMask;
 
     //initialize list for cubes
-    protected List<GameObject> cubesList = new List<GameObject>();
+    public List<GameObject> cubesList = new List<GameObject>();
     //initialize cube prefab reference
     [SerializeField] private GameObject cubePrefab;
 
@@ -135,7 +135,6 @@ public class GameController : MonoBehaviour
                 ResetCube(objToRemove);
             }
         }
-
     }
 
     protected void PlayStateEnter()
@@ -160,11 +159,22 @@ public class GameController : MonoBehaviour
     }
     //method for initializing the menu
     protected void MenuStateEnter()
-    {
+    {           
         menuUI.SetActive(true);
         gameUI.SetActive(false);
         pauseUI.SetActive(false);
         gameOverUI.SetActive(false);
+
+        //reset all values if the game was restarted
+        numHit = 0;
+        numMissed = 0;
+
+        //checking to make sure this isn't the first time we open the game
+        if (cubesList.Count > 0)
+        {
+            //clear cubes list
+            cubesList.Clear();
+        }
     }
     
     //method to initialize the game pause menu
@@ -174,15 +184,11 @@ public class GameController : MonoBehaviour
         gameUI.SetActive(false);
         pauseUI.SetActive(true);
 
-        //freeze all cubes
-        for (int i = 0; i < numCubes; i++)
+        for (int i = 0; i < cubesList.Count; i++)
         {
-            //get cube at list position i
-            GameObject cubeToDisable = 
-            //disable its rigidbody
-            cubeToDisable.GetComponent<Rigidbody>().enabled = false;
-        }
-        
+            //turn off gravity
+            cubesList[i].GetComponent<Rigidbody>().useGravity = false;
+        }        
     }
     //method to initialize the game over state
     protected void GameOverStateEnter()
