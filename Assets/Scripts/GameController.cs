@@ -88,7 +88,6 @@ public class GameController : MonoBehaviour
              //if too many cubes missed, end the game
             if (numMissed >= losingCondition)
             {
-                Debug.Log("Losing condition met");
                 //change to game over state
                 currentState = GameState.GameOverEnter;
             }
@@ -109,10 +108,10 @@ public class GameController : MonoBehaviour
 
         //add new cube to game
         Vector3 randPosInView = new Vector3(Random.Range(-10, 10), 10, Random.Range(-7, 7));
-        Instantiate(cubePrefab, randPosInView, Quaternion.identity);
+        GameObject cubeToAdd = Instantiate(cubePrefab, randPosInView, Quaternion.identity);
 
         //add new cube to list
-        cubesList.Add(cubePrefab);
+        cubesList.Add(cubeToAdd);
     }
 
     protected void PlayStateUpdate()
@@ -149,10 +148,10 @@ public class GameController : MonoBehaviour
             //get random position on screen
             Vector3 randPosInView = new Vector3(Random.Range(-7, 6), Random.Range(10,25), Random.Range(-4, 7));
             //instantiate cube at random position
-            Instantiate(cubePrefab, randPosInView, Quaternion.identity);
+            GameObject cubeToAdd = Instantiate(cubePrefab, randPosInView, Quaternion.identity);
 
             //add that cube to list
-            cubesList.Add(cubePrefab);
+            cubesList.Add(cubeToAdd);
         }
         //change to play state update
         currentState = GameState.PlayUpdate;
@@ -170,10 +169,12 @@ public class GameController : MonoBehaviour
         numMissed = 0;
 
         //checking to make sure this isn't the first time we open the game
-        if (cubesList.Count > 0)
+        while (cubesList.Count > 0)
         {
             //clear cubes list
-            cubesList.Clear();
+            GameObject cube = cubesList[0];
+            Destroy(cube);
+            cubesList.RemoveAt(0);
         }
     }
     
@@ -187,7 +188,7 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < cubesList.Count; i++)
         {
             //turn off gravity
-            cubesList[i].GetComponent<Rigidbody>().useGravity = false;
+            cubesList[i].GetComponent<Rigidbody>().isKinematic = true;
         }        
     }
     //method to initialize the game over state

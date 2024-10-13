@@ -18,7 +18,6 @@ public class PauseMenu : MonoBehaviour
 
     public void OnResumeClicked()
     {
-        Debug.Log("resume clicked");
         //set correct UI
         pauseUI.SetActive(false);
         gameUI.SetActive(true);
@@ -27,7 +26,7 @@ public class PauseMenu : MonoBehaviour
         for (int i = 0; i < resetTrigger.cubesList.Count; i++)
         {
             //get cube at list position i and turn its gravity back on
-            resetTrigger.cubesList[i].GetComponent<Rigidbody>().useGravity = true;
+            resetTrigger.cubesList[i].GetComponent<Rigidbody>().isKinematic = false;
         }
 
         resetTrigger.currentState = GameController.GameState.PlayUpdate;
